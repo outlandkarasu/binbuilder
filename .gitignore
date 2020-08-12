@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/binbuilder
+binbuilder.so
+binbuilder.dylib
+binbuilder.dll
+binbuilder.a
+binbuilder.lib
+binbuilder-test-*
+*.exe
+*.o
+*.obj
+*.lst
