@@ -46,3 +46,27 @@ template ElfTypes(ElfBits bits : ElfBits.bits64)
     alias Xword = uint64_t;
 }
 
+/**
+ELF file header.
+*/
+struct ElfHeader(ElfBits bits : ElfBits.bits64)
+{
+    alias Types = ElfTypes!bits;
+    enum EI_NIDENT = 16;
+
+    ubyte[EI_NIDENT] e_ident;
+    uint16_t e_type;
+    uint16_t e_machine;
+    uint32_t e_version;
+    Types.Addr e_entry;
+    Types.Off e_phoff;
+    Types.Off e_shoff;
+    uint32_t e_flags;
+    uint16_t e_ehsize;
+    uint16_t e_phentsize;
+    uint16_t e_phnum;
+    uint16_t e_shentsize;
+    uint16_t e_shnum;
+    uint16_t e_shstrndx;
+}
+
