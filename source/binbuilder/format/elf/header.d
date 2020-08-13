@@ -35,8 +35,8 @@ struct ElfHeader(ElfBits bits : ElfBits.bits64)
     Types.Off e_phoff;
     Types.Off e_shoff;
     Types.Word e_flags;
-    Types.Half e_ehsize;
-    Types.Half e_phentsize;
+    Types.Half e_ehsize = typeof(this).sizeof;
+    Types.Half e_phentsize = ElfPHeader!(bits).sizeof;
     Types.Half e_phnum;
     Types.Half e_shentsize;
     Types.Half e_shnum;
@@ -112,6 +112,9 @@ struct ElfHeader(ElfBits bits : ElfBits.bits64)
 {
     alias Header = ElfHeader!(ElfBits.bits64);
     auto header = Header();
+    assert(header.e_ehsize == header.sizeof);
+    assert(header.e_phentsize == ElfPHeader!(ElfBits.bits64).sizeof);
+
     header.elfClass = Header.ElfClass.ELFCLASS64;
     header.elfData = Header.ElfData.ELFDATA2LSB;
     header.elfVersion = Header.ElfVersion.EV_CURRENT;
@@ -149,5 +152,6 @@ struct ElfPHeader(ElfBits bits : ElfBits.bits64)
 {
     alias PHeader = ElfPHeader!(ElfBits.bits64);
     auto pheader = PHeader();
+    assert(pheader.sizeof == 56);
 }
 
