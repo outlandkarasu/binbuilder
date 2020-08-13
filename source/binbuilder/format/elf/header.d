@@ -128,3 +128,26 @@ struct ElfHeader(ElfBits bits : ElfBits.bits64)
     assert(header.e_ident[Header.EI_OSABI] == Header.ElfOsAbi.ELFOSABI_LINUX);
 }
 
+/**
+ELF program header.
+*/
+struct ElfPHeader(ElfBits bits : ElfBits.bits64)
+{
+    alias Types = ElfTypes!bits;
+    Types.Word p_type;
+    Types.Word p_flags;
+    Types.Off p_offset;
+    Types.Addr p_vaddr;
+    Types.Addr p_paddr;
+    Types.Xword p_filesz;
+    Types.Xword p_memsz;
+    Types.Xword p_align;
+}
+
+///
+@nogc nothrow pure @safe unittest
+{
+    alias PHeader = ElfPHeader!(ElfBits.bits64);
+    auto pheader = PHeader();
+}
+
