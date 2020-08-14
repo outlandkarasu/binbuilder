@@ -25,3 +25,23 @@ interface Writer
     void write(scope const(ubyte)[] bytes) @nogc nothrow pure @safe scope;
 }
 
+/**
+Instruction writeable.
+*/
+interface Writeable
+{
+    /**
+    Write to writer.
+
+    Params:
+        writer = destination writer.
+    */
+    void writeTo(scope Writer writer) const @nogc nothrow pure @safe scope;
+
+    /**
+    Returns:
+        Writing bytes length.
+    */
+    @property size_t length() const @nogc nothrow pure @safe scope;
+}
+
