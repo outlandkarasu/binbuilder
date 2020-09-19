@@ -57,6 +57,7 @@ Params:
 */
 abstract class GroupPrefix(PrefixGroup group) : Prefix
 {
+private:
     this(ubyte value) @nogc nothrow pure @safe scope
     {
         super(value);
@@ -70,6 +71,8 @@ alias Group4Prefix = GroupPrefix!(PrefixGroup.group4);
 
 private mixin template PrefixConstructor(ubyte value)
 {
+private:
+
     this() @nogc nothrow pure @safe scope
     {
         super(value);
