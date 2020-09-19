@@ -5,6 +5,11 @@ module binbuilder.instruction.amd64.prefix;
 
 import binbuilder.instruction.writer : Writer, Writeable;
 
+version(unittest)
+{
+    import binbuilder.instruction.writer : assertBytes;
+}
+
 /**
 Prefix
 */
@@ -89,10 +94,7 @@ immutable LOCK = new Lock();
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => LOCK.writeTo(writer))();
-    assert(writer[0] == 0xF0);
+    assertBytes(LOCK, [0xF0]);
 }
 
 final class RepeatNotZero: Group1Prefix
@@ -106,10 +108,7 @@ alias REPNE = REPNZ;
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => REPNZ.writeTo(writer))();
-    assert(writer[0] == 0xF2);
+    assertBytes(REPNZ, [0xF2]);
 }
 
 final class Repeat : Group1Prefix
@@ -124,10 +123,7 @@ alias REPZ = REP;
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => REP.writeTo(writer))();
-    assert(writer[0] == 0xF3);
+    assertBytes(REP, [0xF3]);
 }
 
 final class SegmentOverrideCS : Group2Prefix
@@ -140,10 +136,7 @@ immutable CS_SEGMENT_OVERRIDE = new SegmentOverrideCS();
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => CS_SEGMENT_OVERRIDE.writeTo(writer))();
-    assert(writer[0] == 0x2E);
+    assertBytes(CS_SEGMENT_OVERRIDE, [0x2E]);
 }
 
 final class SegmentOverrideSS : Group2Prefix
@@ -156,10 +149,7 @@ immutable SS_SEGMENT_OVERRIDE = new SegmentOverrideSS();
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => SS_SEGMENT_OVERRIDE.writeTo(writer))();
-    assert(writer[0] == 0x36);
+    assertBytes(SS_SEGMENT_OVERRIDE, [0x36]);
 }
 
 final class SegmentOverrideDS : Group2Prefix
@@ -172,10 +162,7 @@ immutable DS_SEGMENT_OVERRIDE = new SegmentOverrideDS();
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => DS_SEGMENT_OVERRIDE.writeTo(writer))();
-    assert(writer[0] == 0x3E);
+    assertBytes(DS_SEGMENT_OVERRIDE, [0x3E]);
 }
 
 final class SegmentOverrideES : Group2Prefix
@@ -188,10 +175,7 @@ immutable ES_SEGMENT_OVERRIDE = new SegmentOverrideES();
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => ES_SEGMENT_OVERRIDE.writeTo(writer))();
-    assert(writer[0] == 0x26);
+    assertBytes(ES_SEGMENT_OVERRIDE, [0x26]);
 }
 
 final class SegmentOverrideFS : Group2Prefix
@@ -204,10 +188,7 @@ immutable FS_SEGMENT_OVERRIDE = new SegmentOverrideFS();
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => FS_SEGMENT_OVERRIDE.writeTo(writer))();
-    assert(writer[0] == 0x64);
+    assertBytes(FS_SEGMENT_OVERRIDE, [0x64]);
 }
 
 final class SegmentOverrideGS : Group2Prefix
@@ -220,10 +201,7 @@ immutable GS_SEGMENT_OVERRIDE = new SegmentOverrideGS();
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => GS_SEGMENT_OVERRIDE.writeTo(writer))();
-    assert(writer[0] == 0x65);
+    assertBytes(GS_SEGMENT_OVERRIDE, [0x65]);
 }
 
 final class BranchNotTaken : Group2Prefix
@@ -236,10 +214,7 @@ immutable BRANCH_NOT_TAKEN = new BranchNotTaken();
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => BRANCH_NOT_TAKEN.writeTo(writer))();
-    assert(writer[0] == 0x2E);
+    assertBytes(BRANCH_NOT_TAKEN, [0x2E]);
 }
 
 final class BranchTaken : Group2Prefix
@@ -252,10 +227,7 @@ immutable BRANCH_TAKEN = new BranchTaken();
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => BRANCH_TAKEN.writeTo(writer))();
-    assert(writer[0] == 0x3E);
+    assertBytes(BRANCH_TAKEN, [0x3E]);
 }
 
 final class OperandSizeOverride : Group3Prefix
@@ -268,10 +240,7 @@ immutable OPERAND_SIZE_OVERRIDE = new OperandSizeOverride();
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => OPERAND_SIZE_OVERRIDE.writeTo(writer))();
-    assert(writer[0] == 0x66);
+    assertBytes(OPERAND_SIZE_OVERRIDE, [0x66]);
 }
 
 final class AddressSizeOverride : Group4Prefix
@@ -284,9 +253,6 @@ immutable ADDRESS_SIZE_OVERRIDE = new AddressSizeOverride();
 ///
 @nogc nothrow pure unittest
 {
-    import binbuilder.instruction.writer : ArrayWriter;
-    scope writer = new ArrayWriter();
-    (() @safe => ADDRESS_SIZE_OVERRIDE.writeTo(writer))();
-    assert(writer[0] == 0x67);
+    assertBytes(ADDRESS_SIZE_OVERRIDE, [0x67]);
 }
 

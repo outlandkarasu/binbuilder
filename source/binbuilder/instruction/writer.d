@@ -89,3 +89,19 @@ nothrow pure @safe unittest
     assert(writer[5] == 0x06);
 }
 
+version(unittest)
+{
+    void assertBytes(
+        scope const(Writeable) writeable,
+        scope const(ubyte)[] expect)
+        @nogc nothrow pure @trusted
+    {
+        scope writer = new ArrayWriter();
+        writeable.writeTo(writer);
+        foreach (i, c; expect)
+        {
+            assert(writer[i] == c);
+        }
+    }
+}
+
