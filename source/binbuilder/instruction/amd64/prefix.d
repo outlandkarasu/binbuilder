@@ -226,3 +226,19 @@ immutable GS_SEGMENT_OVERRIDE = new SegmentOverrideGS();
     assert(writer[0] == 0x65);
 }
 
+final class OperandSizeOverride : Group3Prefix
+{
+    mixin PrefixConstructor!(0x66);
+}
+
+immutable OPERAND_SIZE_OVERRIDE = new OperandSizeOverride();
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => OPERAND_SIZE_OVERRIDE.writeTo(writer))();
+    assert(writer[0] == 0x66);
+}
+
