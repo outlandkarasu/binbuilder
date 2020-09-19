@@ -226,6 +226,38 @@ immutable GS_SEGMENT_OVERRIDE = new SegmentOverrideGS();
     assert(writer[0] == 0x65);
 }
 
+final class BranchNotTaken : Group2Prefix
+{
+    mixin PrefixConstructor!(0x2E);
+}
+
+immutable BRANCH_NOT_TAKEN = new BranchNotTaken();
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => BRANCH_NOT_TAKEN.writeTo(writer))();
+    assert(writer[0] == 0x2E);
+}
+
+final class BranchTaken : Group2Prefix
+{
+    mixin PrefixConstructor!(0x3E);
+}
+
+immutable BRANCH_TAKEN = new BranchTaken();
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => BRANCH_TAKEN.writeTo(writer))();
+    assert(writer[0] == 0x3E);
+}
+
 final class OperandSizeOverride : Group3Prefix
 {
     mixin PrefixConstructor!(0x66);
