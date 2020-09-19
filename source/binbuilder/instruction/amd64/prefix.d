@@ -92,3 +92,20 @@ immutable LOCK = new Lock();
     assert(writer[0] == 0xF0);
 }
 
+final class RepeatNotZero: Group1Prefix
+{
+    mixin PrefixConstructor!(0xF2);
+}
+
+immutable REPNZ = new RepeatNotZero();
+alias REPNE = REPNZ;
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => REPNZ.writeTo(writer))();
+    assert(writer[0] == 0xF2);
+}
+
