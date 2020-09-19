@@ -127,3 +127,99 @@ alias REPZ = REP;
     assert(writer[0] == 0xF3);
 }
 
+final class SegmentOverrideCS : Group2Prefix
+{
+    mixin PrefixConstructor!(0x2E);
+}
+
+immutable CS_SEGMENT_OVERRIDE = new SegmentOverrideCS();
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => CS_SEGMENT_OVERRIDE.writeTo(writer))();
+    assert(writer[0] == 0x2E);
+}
+
+final class SegmentOverrideSS : Group2Prefix
+{
+    mixin PrefixConstructor!(0x36);
+}
+
+immutable SS_SEGMENT_OVERRIDE = new SegmentOverrideSS();
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => SS_SEGMENT_OVERRIDE.writeTo(writer))();
+    assert(writer[0] == 0x36);
+}
+
+final class SegmentOverrideDS : Group2Prefix
+{
+    mixin PrefixConstructor!(0x3E);
+}
+
+immutable DS_SEGMENT_OVERRIDE = new SegmentOverrideDS();
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => DS_SEGMENT_OVERRIDE.writeTo(writer))();
+    assert(writer[0] == 0x3E);
+}
+
+final class SegmentOverrideES : Group2Prefix
+{
+    mixin PrefixConstructor!(0x26);
+}
+
+immutable ES_SEGMENT_OVERRIDE = new SegmentOverrideES();
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => ES_SEGMENT_OVERRIDE.writeTo(writer))();
+    assert(writer[0] == 0x26);
+}
+
+final class SegmentOverrideFS : Group2Prefix
+{
+    mixin PrefixConstructor!(0x64);
+}
+
+immutable FS_SEGMENT_OVERRIDE = new SegmentOverrideFS();
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => FS_SEGMENT_OVERRIDE.writeTo(writer))();
+    assert(writer[0] == 0x64);
+}
+
+final class SegmentOverrideGS : Group2Prefix
+{
+    mixin PrefixConstructor!(0x65);
+}
+
+immutable GS_SEGMENT_OVERRIDE = new SegmentOverrideGS();
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => GS_SEGMENT_OVERRIDE.writeTo(writer))();
+    assert(writer[0] == 0x65);
+}
+
