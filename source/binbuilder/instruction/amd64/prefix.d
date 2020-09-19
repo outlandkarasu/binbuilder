@@ -256,3 +256,37 @@ immutable ADDRESS_SIZE_OVERRIDE = new AddressSizeOverride();
     assertBytes(ADDRESS_SIZE_OVERRIDE, [0x67]);
 }
 
+final class Rex : Prefix
+{
+    enum OperandSize : ubyte
+    {
+        determinedByCS_D = 0b0000,
+        size64Bit = 0b1000,
+    }
+
+    this(OperandSize operandSize, bool modRM, bool sib, bool base) @nogc nothrow pure @safe scope
+    {
+        super(
+            0b0100_0000
+            | operandSize
+            | (modRM ? 0b100 : 0)
+            | (sib ? 0b010 : 0)
+            | (base ? 0b001 : 0));
+    }
+}
+
+///
+nothrow pure unittest
+{
+    assertBytes(new Rex(Rex.OperandSize.determinedByCS_D, false, false, false),
+        [0b0100_0000]);
+    assertBytes(new Rex(Rex.OperandSize.size64Bit, false, false, false),
+        [0b0100_1000]);
+    assertBytes(new Rex(Rex.OperandSize.size64Bit, true, false, false),
+        [0b0100_1100]);
+    assertBytes(new Rex(Rex.OperandSize.size64Bit, false, true, false),
+        [0b0100_1010]);
+    assertBytes(new Rex(Rex.OperandSize.size64Bit, false, false, true),
+        [0b0100_1001]);
+}
+
