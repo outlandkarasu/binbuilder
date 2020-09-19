@@ -242,3 +242,19 @@ immutable OPERAND_SIZE_OVERRIDE = new OperandSizeOverride();
     assert(writer[0] == 0x66);
 }
 
+final class AddressSizeOverride : Group4Prefix
+{
+    mixin PrefixConstructor!(0x67);
+}
+
+immutable ADDRESS_SIZE_OVERRIDE = new AddressSizeOverride();
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => ADDRESS_SIZE_OVERRIDE.writeTo(writer))();
+    assert(writer[0] == 0x67);
+}
+
