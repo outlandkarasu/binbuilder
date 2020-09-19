@@ -109,3 +109,21 @@ alias REPNE = REPNZ;
     assert(writer[0] == 0xF2);
 }
 
+final class Repeat : Group1Prefix
+{
+    mixin PrefixConstructor!(0xF3);
+}
+
+immutable REP = new Repeat();
+alias REPE = REP;
+alias REPZ = REP;
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => REP.writeTo(writer))();
+    assert(writer[0] == 0xF3);
+}
+
