@@ -38,3 +38,57 @@ private:
     ubyte value_;
 }
 
+/**
+Prefix group
+*/
+enum PrefixGroup
+{
+    group1,
+    group2,
+    group3,
+    group4,
+}
+
+/**
+Group prefix.
+
+Params:
+    group = prefix group.
+*/
+abstract class GroupPrefix(PrefixGroup group) : Prefix
+{
+    this(ubyte value) @nogc nothrow pure @safe scope
+    {
+        super(value);
+    }
+}
+
+alias Group1Prefix = GroupPrefix!(PrefixGroup.group1);
+alias Group2Prefix = GroupPrefix!(PrefixGroup.group2);
+alias Group3Prefix = GroupPrefix!(PrefixGroup.group3);
+alias Group4Prefix = GroupPrefix!(PrefixGroup.group4);
+
+private mixin template PrefixConstructor(ubyte value)
+{
+    this() @nogc nothrow pure @safe scope
+    {
+        super(value);
+    }
+}
+
+final class Lock : Group1Prefix
+{
+    mixin PrefixConstructor!(0xF0);
+}
+
+immutable LOCK = new Lock();
+
+///
+@nogc nothrow pure unittest
+{
+    import binbuilder.instruction.writer : ArrayWriter;
+    scope writer = new ArrayWriter();
+    (() @safe => LOCK.writeTo(writer))();
+    assert(writer[0] == 0xF0);
+}
+
